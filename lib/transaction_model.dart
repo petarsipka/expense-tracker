@@ -12,12 +12,15 @@ class Transaction extends HiveObject {
   final double amount;
   @HiveField(3)
   final DateTime date;
+  @HiveField(4)
+  final String? category;
 
   Transaction({
     required this.id,
     required this.title,
     required this.amount,
     required this.date,
+    required this.category,
   });
 
   Map<String, dynamic> toJson() {
@@ -26,15 +29,17 @@ class Transaction extends HiveObject {
       'title': title,
       'amount': amount,
       'date': date.toIso8601String(),
+      'category': category,
     };
   }
 
-  factory Transaction.fromJson(Map<String, dynamic> json) {
+  factory Transaction.fromJson(Map<String, dynamic> json) {    
     return Transaction(
       id: json['id'],
       title: json['title'],
       amount: json['amount'],
       date: DateTime.parse(json['date']),
+      category: json['category'],
     );
   }
 }
