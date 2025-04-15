@@ -13,7 +13,7 @@ void main() async {
           ? (await getApplicationDocumentsDirectory()).path
           : Directory.current.path;
 
-  await Hive.initFlutter(hivePath); // Will work on all platforms
+  await Hive.initFlutter(hivePath);
 
   Hive.registerAdapter(TransactionAdapter());
   await Hive.openBox<Transaction>('transactions');
@@ -29,7 +29,7 @@ class ExpenseTracker extends StatelessWidget {
     return MaterialApp(
       title: 'Expense Tracker',
       theme: ThemeData(primarySwatch: Colors.green),
-      home: const PageNavigation(), // 👈 Use new page here
+      home: const PageNavigation(),
     );
   }
 }

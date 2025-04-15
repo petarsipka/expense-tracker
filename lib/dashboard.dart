@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'transaction_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -32,7 +33,7 @@ class _DashboardPageState extends State<DashboardPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,
-        title: Text('dashboard'),
+        title: Text('Dashboard'),
       ),
       body: SingleChildScrollView(
         child: LayoutBuilder(
@@ -48,7 +49,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        'recurring spendings:',
+                        'Recurring spendings:',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.normal,
@@ -58,6 +59,27 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   SizedBox(height: 5),
                   SubscriptionsReminder(transactions: _transactions),
+                  SizedBox(height: 50),
+                  SfCalendar(
+                    headerStyle: CalendarHeaderStyle(
+                      backgroundColor: Colors.transparent,
+                    ),
+                    view: CalendarView.month,
+                    todayHighlightColor: Colors.indigo,
+                    monthViewSettings: MonthViewSettings(
+                      agendaItemHeight: 30,
+                      showAgenda: true,
+                      agendaViewHeight: 50,
+                      showTrailingAndLeadingDates: false,
+                      numberOfWeeksInView: 5,
+                      monthCellStyle: MonthCellStyle(
+                        todayBackgroundColor: Colors.indigo,
+                        todayTextStyle: TextStyle(color: Colors.indigo),
+                      ),
+                    ),
+                    headerHeight: 30,
+                  ),
+                  SizedBox(height: 10),
                 ],
               ),
             );
@@ -89,7 +111,7 @@ class BalanceCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'available balance',
+              'Available balance',
               style: TextStyle(
                 fontWeight: FontWeight.normal,
                 fontSize: 12,
@@ -97,11 +119,10 @@ class BalanceCard extends StatelessWidget {
               ),
             ),
             TotalBalance(transactions: transactions),
-            // SizedBox(height: 10),
             GestureDetector(
               onTap: () {},
               child: Text(
-                'see details',
+                'See details',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.normal,
@@ -155,11 +176,11 @@ class SubscriptionsReminder extends StatelessWidget {
             .toList();
 
     if (recurringTransactions.isEmpty) {
-      return Text('No current reacurring payments on the way');
+      return Text('No current recurring payments on the way');
     }
 
     return SizedBox(
-      height: 400,
+      height: 300,
       child: ListView.builder(
         itemCount: recurringTransactions.length,
         itemBuilder: (context, index) {
