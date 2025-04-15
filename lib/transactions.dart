@@ -8,7 +8,7 @@ const List<String> list = <String>[
   'monthly',
   'annual',
   'income',
-]; // FOR DROPDOWN
+];
 
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({super.key});
@@ -44,10 +44,10 @@ class _TransactionsPageState extends State<TransactionsPage> {
     final enteredTitle = _titleController.text;
     final enteredAmount = double.tryParse(_amountController.text) ?? 0;
     final enteredCategory = selectedValue;
-    //print(enteredCategory);
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0 || selectedValue == null)
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || selectedValue == null) {
       return;
+    }
 
     final newTx = Transaction(
       id: DateTime.now().toString(),
@@ -56,7 +56,6 @@ class _TransactionsPageState extends State<TransactionsPage> {
       date: DateTime.now(),
       category: enteredCategory,
     );
-    //print(newTx.category);
 
     final box = Hive.box<Transaction>('transactions');
     await box.add(newTx);
@@ -69,19 +68,6 @@ class _TransactionsPageState extends State<TransactionsPage> {
     _titleController.clear();
     _amountController.clear();
   }
-
-  // void _deleteTransaction(String id) async {
-  //   final box = Hive.box<Transaction>('transactions');
-  //   final index = _transactions.indexWhere((tx) => tx.id == id);
-
-  //   if (index != -1) {
-  //     await box.deleteAt(index);
-  //     setState(() {
-  //       _transactions.removeAt(index);
-  //       _filterTransactions();
-  //     });
-  //   }
-  // }
 
   void _onSearchChanged() {
     _filterTransactions();
@@ -113,7 +99,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,
-        title: Text('transactions'),
+        title: Text('Transactions'),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -128,7 +114,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                       children: [
                         TextField(
                           decoration: InputDecoration(
-                            labelText: 'title',
+                            labelText: 'Title',
                             contentPadding: EdgeInsets.only(left: 15),
                             labelStyle: TextStyle(color: Colors.black),
                           ),
@@ -137,7 +123,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                         SizedBox(height: 10),
                         TextField(
                           decoration: InputDecoration(
-                            labelText: 'amount',
+                            labelText: 'Amount',
                             contentPadding: EdgeInsets.only(left: 15),
                             labelStyle: TextStyle(color: Colors.black),
                           ),
@@ -151,7 +137,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                           child: DropdownButton2<String>(
                             isExpanded: true,
                             hint: Text(
-                              'category',
+                              'Type',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
@@ -205,7 +191,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                               backgroundColor: Colors.indigo,
                             ),
                             child: Text(
-                              'add transaction',
+                              'Add transaction',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -225,7 +211,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                           child: TextField(
                             controller: _searchController,
                             decoration: InputDecoration(
-                              labelText: 'search transactions...',
+                              labelText: 'Search transactions...',
                               prefixIcon: Icon(Icons.search),
                               suffixIcon:
                                   _searchController.text.isNotEmpty
@@ -250,7 +236,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                           child: ValueListenableBuilder<Box<Transaction>>(
                             valueListenable:
                                 Hive.box<Transaction>(
-                                  'transactions',
+                                  'Transactions',
                                 ).listenable(),
                             builder: (context, box, _) {
                               final allTransactions = box.values.toList();
@@ -273,7 +259,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                               if (filtered.isEmpty) {
                                 return Center(
                                   child: Text(
-                                    'no transactions found',
+                                    'No transactions found',
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey,

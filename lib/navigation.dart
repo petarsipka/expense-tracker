@@ -36,15 +36,15 @@ class _PageNavigationState extends State<PageNavigation> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
-            label: 'dashboard'
+            label: 'Dashboard'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.wallet_outlined),
-            label: 'transactions'
+            label: 'Transactions'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.credit_card),
-            label: 'in progress'
+            label: 'Budget'
           ),
         ],
       ),
